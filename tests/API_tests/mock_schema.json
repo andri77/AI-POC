@@ -1,0 +1,235 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "user": {
+            "type": "object",
+            "required": ["id", "name", "email", "avatar", "address", "phone"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identifier for the user"
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 2,
+                    "description": "Full name of the user"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "User's email address"
+                },
+                "avatar": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL to user's avatar image"
+                },
+                "address": {
+                    "type": "string",
+                    "minLength": 5,
+                    "description": "User's street address"
+                },
+                "phone": {
+                    "type": "string",
+                    "description": "User's phone number"
+                }
+            }
+        },
+        "product": {
+            "type": "object",
+            "required": ["id", "name", "price", "description", "category", "image"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identifier for the product"
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 2,
+                    "description": "Name of the product"
+                },
+                "price": {
+                    "type": "string",
+                    "pattern": "^\\d+\\.?\\d*$",
+                    "description": "Product price"
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 10,
+                    "description": "Product description"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "Product category"
+                },
+                "image": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL to product image"
+                }
+            }
+        },
+        "post": {
+            "type": "object",
+            "required": ["id", "title", "content", "author", "date", "tags"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identifier for the post"
+                },
+                "title": {
+                    "type": "string",
+                    "minLength": 5,
+                    "description": "Post title"
+                },
+                "content": {
+                    "type": "string",
+                    "minLength": 10,
+                    "description": "Post content"
+                },
+                "author": {
+                    "type": "string",
+                    "minLength": 2,
+                    "description": "Post author name"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Post creation date"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "description": "Array of post tags"
+                }
+            }
+        },
+        "customSchema": {
+            "type": "object",
+            "required": ["schema"],
+            "properties": {
+                "schema": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "type": "string",
+                        "enum": [
+                            "name",
+                            "email",
+                            "phone",
+                            "address",
+                            "company",
+                            "date",
+                            "number",
+                            "boolean"
+                        ]
+                    }
+                },
+                "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 1
+                }
+            }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "root": {
+            "type": "object",
+            "required": ["message", "endpoints"],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "const": "Mock API Generator"
+                },
+                "endpoints": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": ["path", "description"],
+                        "properties": {
+                            "path": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "minItems": 1
+                }
+            }
+        },
+        "users": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/user"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user"
+                    }
+                }
+            ]
+        },
+        "products": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/product"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/product"
+                    }
+                }
+            ]
+        },
+        "posts": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/post"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/post"
+                    }
+                }
+            ]
+        },
+        "custom": {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                }
+            ]
+        },
+        "error": {
+            "type": "object",
+            "required": ["error"],
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
