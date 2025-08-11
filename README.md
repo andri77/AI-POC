@@ -113,6 +113,143 @@ After running tests, view the HTML report:
 npx playwright show-report
 ```
 
+## UI Testing Suite
+
+The project includes comprehensive UI tests located in the `tests/UI_tests` directory.
+
+### Prerequisites
+
+1. Install Playwright and browsers:
+```bash
+npm install
+npx playwright install
+```
+
+2. Install system dependencies (if needed):
+```bash
+npx playwright install-deps
+```
+
+### Available UI Test Suites
+
+- `ecommerce.spec.ts`: Tests for e-commerce functionality
+  - Product listing and search
+  - Shopping cart operations
+  - Checkout process
+- `example.spec.ts`: Example test scenarios and templates
+- `homepage.spec.ts`: Homepage functionality tests
+  - Navigation menu
+  - Search functionality
+  - Dynamic content loading
+- `webinars-navigation.spec.ts`: Navigation tests for webinars section
+  - Webinar listing
+  - Filtering and sorting
+  - Registration flow
+
+### Test Configuration
+
+The project uses `playwright.config.ts` for test configuration:
+- Timeout settings
+- Browser configurations
+- Parallel execution settings
+- Screenshot and video capture settings
+- Viewport sizes
+- Custom device emulation
+
+### Running UI Tests
+
+1. Run all UI tests:
+```bash
+npx playwright test tests/UI_tests/
+```
+
+2. Run a specific UI test file:
+```bash
+npx playwright test tests/UI_tests/homepage.spec.ts
+```
+
+3. Run UI tests with browser visible:
+```bash
+npx playwright test tests/UI_tests/ --headed
+```
+
+4. Run UI tests in debug mode:
+```bash
+npx playwright test tests/UI_tests/ --debug
+```
+
+5. Run tests with specific workers:
+```bash
+npx playwright test tests/UI_tests/ --workers=4
+```
+
+### Running Tests in Different Browsers
+
+By default, tests run in all configured browsers. To run in specific browsers:
+
+```bash
+# Run in Chromium only
+npx playwright test tests/UI_tests/ --project=chromium
+
+# Run in Firefox only
+npx playwright test tests/UI_tests/ --project=firefox
+
+# Run in WebKit only
+npx playwright test tests/UI_tests/ --project=webkit
+```
+
+### Test Reports and Artifacts
+
+1. HTML Report:
+```bash
+npx playwright show-report
+```
+
+2. Generate and open report after test run:
+```bash
+npx playwright test tests/UI_tests/ --reporter=html && npx playwright show-report
+```
+
+3. Locate test artifacts:
+- Screenshots: `test-results/*/screenshots/`
+- Videos: `test-results/*/video/`
+- Traces: `test-results/*/traces/`
+
+### UI Test Best Practices
+
+1. Keep test files organized by feature or page
+2. Use Page Object Model pattern when applicable
+3. Write descriptive test names
+4. Add proper assertions for UI elements
+5. Handle dynamic content and loading states
+6. Use test isolation to prevent dependencies between tests
+7. Implement retry mechanisms for flaky tests
+8. Use test data fixtures for consistent test data
+9. Implement custom test helpers for common operations
+10. Follow mobile-first testing approach when applicable
+
+### Debugging Tips
+
+1. Use Playwright Inspector:
+```bash
+PWDEBUG=1 npx playwright test tests/UI_tests/
+```
+
+2. Save trace for failed tests:
+```bash
+npx playwright test tests/UI_tests/ --trace on-first-retry
+```
+
+3. Record test scripts:
+```bash
+npx playwright codegen http://your-application-url
+```
+
+4. Take screenshots during test execution:
+```bash
+npx playwright test tests/UI_tests/ --screenshot=on
+```
+
 ## Troubleshooting
 
 1. If the server fails to start with EADDRINUSE:
