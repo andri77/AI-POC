@@ -1,0 +1,123 @@
+{
+  "name": "MOCK_GEN API Collection",
+  "description": "Collection of test requests for the MOCK_GEN mock API generator",
+  "baseUrl": "http://localhost:3000",
+  "requests": [
+    {
+      "name": "Get API Information",
+      "description": "Get information about available endpoints",
+      "method": "GET",
+      "url": "http://localhost:3000/",
+      "headers": {
+        "Accept": "application/json"
+      }
+    },
+    {
+      "name": "Generate Users",
+      "description": "Generate mock user data (5 users)",
+      "method": "GET",
+      "url": "http://localhost:3000/api/users?count=5",
+      "headers": {
+        "Accept": "application/json"
+      }
+    },
+    {
+      "name": "Generate Single User",
+      "description": "Generate mock data for a single user",
+      "method": "GET",
+      "url": "http://localhost:3000/api/users?count=1",
+      "headers": {
+        "Accept": "application/json"
+      }
+    },
+    {
+      "name": "Generate Products",
+      "description": "Generate mock product data (5 products)",
+      "method": "GET",
+      "url": "http://localhost:3000/api/products?count=5",
+      "headers": {
+        "Accept": "application/json"
+      }
+    },
+    {
+      "name": "Generate Single Product",
+      "description": "Generate mock data for a single product",
+      "method": "GET",
+      "url": "http://localhost:3000/api/products?count=1",
+      "headers": {
+        "Accept": "application/json"
+      }
+    },
+    {
+      "name": "Generate Posts",
+      "description": "Generate mock post data (5 posts)",
+      "method": "GET",
+      "url": "http://localhost:3000/api/posts?count=5",
+      "headers": {
+        "Accept": "application/json"
+      }
+    },
+    {
+      "name": "Generate Single Post",
+      "description": "Generate mock data for a single post",
+      "method": "GET",
+      "url": "http://localhost:3000/api/posts?count=1",
+      "headers": {
+        "Accept": "application/json"
+      }
+    },
+    {
+      "name": "Generate Custom Data - User Profile",
+      "description": "Generate custom mock data for user profiles",
+      "method": "POST",
+      "url": "http://localhost:3000/api/custom",
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      "body": {
+        "schema": {
+          "fullName": "name",
+          "userEmail": "email",
+          "phoneNumber": "phone",
+          "address": "address",
+          "companyName": "company",
+          "joinDate": "date",
+          "isActive": "boolean"
+        },
+        "count": 3
+      }
+    },
+    {
+      "name": "Generate Custom Data - Product Catalog",
+      "description": "Generate custom mock data for product catalog",
+      "method": "POST",
+      "url": "http://localhost:3000/api/custom",
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      "body": {
+        "schema": {
+          "productName": "name",
+          "price": "number",
+          "manufacturer": "company",
+          "inStock": "boolean",
+          "lastUpdated": "date"
+        },
+        "count": 3
+      }
+    }
+  ],
+  "environments": {
+    "development": {
+      "baseUrl": "http://localhost:3000"
+    },
+    "testing": {
+      "baseUrl": "http://localhost:3000"
+    }
+  },
+  "preRequestScripts": {
+    "setRandomCount": "// Set a random count between 1 and 10\nconst randomCount = Math.floor(Math.random() * 10) + 1;\nconst url = new URL(request.url);\nurl.searchParams.set('count', randomCount.toString());\nrequest.url = url.toString();"
+  }
+}

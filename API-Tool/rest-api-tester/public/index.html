@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API Tester</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Collections & History</h2>
+                <button id="import-collection" class="import-btn">Import Collection</button>
+                <input type="file" id="collection-file" accept=".json" style="display: none">
+            </div>
+            <div class="collections-section">
+                <h3>Collections</h3>
+                <div id="collections-list"></div>
+            </div>
+            <div class="history-section">
+                <h3>History</h3>
+                <div id="history-list"></div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="request-section">
+                <div class="url-line">
+                    <select id="method">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                        <option value="PATCH">PATCH</option>
+                    </select>
+                    <input type="text" id="url" placeholder="Enter URL" />
+                    <button id="send">Send</button>
+                    <button id="copy-curl">Copy as cURL</button>
+                </div>
+                <div id="curl-command" class="curl-preview"></div>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="headers">Headers</button>
+                    <button class="tab-btn" data-tab="params">Params</button>
+                    <button class="tab-btn" data-tab="body">Body</button>
+                    <button class="tab-btn" data-tab="pre-request">Pre-request Script</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div id="headers" class="tab-pane active">
+                        <div class="headers-list">
+                            <div class="header-row">
+                                <input type="text" placeholder="Key" />
+                                <input type="text" placeholder="Value" />
+                                <button class="add-header">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="params" class="tab-pane">
+                        <div class="params-list">
+                            <div class="param-row">
+                                <input type="text" placeholder="Key" />
+                                <input type="text" placeholder="Value" />
+                                <button class="add-param">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="body" class="tab-pane">
+                        <textarea id="request-body" placeholder="Request body (JSON)"></textarea>
+                    </div>
+                    <div id="pre-request" class="tab-pane">
+                        <textarea id="pre-request-script" placeholder="// Pre-request Script
+// You can modify request properties before it's sent
+// Example:
+request.headers['Authorization'] = 'Bearer ' + environment.get('token');
+request.data.timestamp = new Date().toISOString();
+
+// Store variables in environment
+environment.set('myVar', 'myValue');"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="response-section">
+                <div class="response-header">
+                    <span class="status"></span>
+                    <span class="time"></span>
+                </div>
+                <div class="response-tabs">
+                    <button class="tab-btn active" data-tab="response">Response</button>
+                    <button class="tab-btn" data-tab="headers">Headers</button>
+                </div>
+                <div class="response-content">
+                    <pre id="response-data"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
