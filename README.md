@@ -68,11 +68,6 @@ curl -X POST -H "Content-Type: application/json" -d '{
 npx playwright test tests/API_tests/mock_api.spec.ts
 ```
 
-To run tests with a browser UI:
-```bash
-npx playwright test tests/API_tests/mock_api.spec.ts --headed
-```
-
 To run tests in debug mode:
 ```bash
 npx playwright test tests/API_tests/mock_api.spec.ts --debug
