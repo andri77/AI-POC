@@ -2,17 +2,25 @@
 
 This project contains a mock API generator and a comprehensive testing suite using Playwright.
 
+## Installation
+
+To install all dependencies and requirements to run all tests, run the following script:
+
+```bash
+bash scripts/install-dependencies.sh
+```
+
 ## Project Structure
 
 ```
-PW_Demo/
-├── MOCK_GEN/               # Mock API Generator
-│   ├── server.js          # API server implementation
-│   ├── package.json       # API dependencies
-│   └── README.md         # API documentation
-└── tests/
-    └── API_tests/        # API test suites
-        └── mock_api.spec.ts  # Mock API tests
+.
+├── scripts/              # Shell scripts for running tests
+├── tests/
+│   ├── API_tests/        # API test suites
+│   └── UI-Tests/         # UI test suites
+│       ├── pages/        # Page Object Models
+│       └── tests/        # UI test files
+...
 ```
 
 ## Part 1: Mock API Generator (MOCK_GEN)
@@ -110,7 +118,7 @@ npx playwright show-report
 
 ## UI Testing Suite
 
-The project includes comprehensive UI tests located in the `tests/UI_tests` directory.
+The project includes UI tests for the Asahi Beverages website, located in the `tests/UI-Tests` directory.
 
 ### Prerequisites
 
@@ -127,70 +135,29 @@ npx playwright install-deps
 
 ### Available UI Test Suites
 
-- `ecommerce.spec.ts`: Tests for e-commerce functionality
-  - Product listing and search
-  - Shopping cart operations
-  - Checkout process
-- `example.spec.ts`: Example test scenarios and templates
-- `homepage.spec.ts`: Homepage functionality tests
-  - Navigation menu
-  - Search functionality
-  - Dynamic content loading
-- `webinars-navigation.spec.ts`: Navigation tests for webinars section
-  - Webinar listing
-  - Filtering and sorting
-  - Registration flow
+- `home.spec.ts`: Tests for the Asahi Beverages website homepage.
+  - Age gate entry
+  - Navigation to "Our Brands" page
 
-### Test Configuration
+### Running UI Tests with Shell Scripts
 
-The project uses `playwright.config.ts` for test configuration:
-- Timeout settings
-- Browser configurations
-- Parallel execution settings
-- Screenshot and video capture settings
-- Viewport sizes
-- Custom device emulation
+The `scripts/` directory contains shell scripts to run the UI tests in different configurations.
 
-### Running UI Tests
+**Single Browser Tests:**
 
-1. Run all UI tests:
+*   `scripts/run-headed-chromium.sh`: Runs tests in headed mode on Chromium.
+*   `scripts/run-headless-chromium.sh`: Runs tests in headless mode on Chromium.
+*   `scripts/run-headed-firefox.sh`: Runs tests in headed mode on Firefox.
+*   `scripts/run-headless-firefox.sh`: Runs tests in headless mode on Firefox.
+
+**Parallel Tests:**
+
+*   `scripts/run-parallel-headed.sh`: Runs tests in parallel in headed mode on Chromium and Firefox.
+*   `scripts/run-parallel-headless.sh`: Runs tests in parallel in headless mode on Chromium and Firefox.
+
+**How to run a script:**
 ```bash
-npx playwright test tests/UI_tests/
-```
-
-2. Run a specific UI test file:
-```bash
-npx playwright test tests/UI_tests/homepage.spec.ts
-```
-
-3. Run UI tests with browser visible:
-```bash
-npx playwright test tests/UI_tests/ --headed
-```
-
-4. Run UI tests in debug mode:
-```bash
-npx playwright test tests/UI_tests/ --debug
-```
-
-5. Run tests with specific workers:
-```bash
-npx playwright test tests/UI_tests/ --workers=4
-```
-
-### Running Tests in Different Browsers
-
-By default, tests run in all configured browsers. To run in specific browsers:
-
-```bash
-# Run in Chromium only
-npx playwright test tests/UI_tests/ --project=chromium
-
-# Run in Firefox only
-npx playwright test tests/UI_tests/ --project=firefox
-
-# Run in WebKit only
-npx playwright test tests/UI_tests/ --project=webkit
+bash scripts/run-parallel-headed.sh
 ```
 
 ### Test Reports and Artifacts
@@ -202,7 +169,7 @@ npx playwright show-report
 
 2. Generate and open report after test run:
 ```bash
-npx playwright test tests/UI_tests/ --reporter=html && npx playwright show-report
+bash scripts/run-parallel-headless.sh --reporter=html && npx playwright show-report
 ```
 
 3. Locate test artifacts:
@@ -227,22 +194,22 @@ npx playwright test tests/UI_tests/ --reporter=html && npx playwright show-repor
 
 1. Use Playwright Inspector:
 ```bash
-PWDEBUG=1 npx playwright test tests/UI_tests/
+PWDEBUG=1 npx playwright test tests/UI-Tests/tests/
 ```
 
 2. Save trace for failed tests:
 ```bash
-npx playwright test tests/UI_tests/ --trace on-first-retry
+npx playwright test tests/UI-Tests/tests/ --trace on-first-retry
 ```
 
 3. Record test scripts:
 ```bash
-npx playwright codegen http://your-application-url
+npx playwright codegen https://www.asahibeverages.com/?ref=asahi
 ```
 
 4. Take screenshots during test execution:
 ```bash
-npx playwright test tests/UI_tests/ --screenshot=on
+npx playwright test tests/UI-Tests/tests/ --screenshot=on
 ```
 
 ## Troubleshooting
